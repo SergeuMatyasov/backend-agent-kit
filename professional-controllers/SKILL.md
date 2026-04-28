@@ -29,6 +29,7 @@ description: "Используй при полном рефакторинге AS
 4. Проверять совместимость существующих клиентских сценариев.
 5. При изменении route приводить публичные endpoint к явному lowercase/kebab-case resource-style, принятому в Leo.Orders и Leo.Identity.
 6. Не оставлять CamelCase route как итог рефакторинга, если только это не явно согласованный временный compatibility-layer.
+7. Выносить HTTP DTO в host-level contracts с явным `JsonPropertyName`, строгим `camelCase`, отдельной папкой на каждый action и явным mapping в business layer.
 
 ## Рекомендуемые практики
 1. Сначала фиксировать текущий контракт (routes, DTO, status codes, errors), потом менять код.
@@ -36,6 +37,7 @@ description: "Используй при полном рефакторинге AS
 3. Вносить изменения малыми логическими шагами с промежуточной проверкой.
 4. Явно документировать migration notes для клиентов API.
 5. При выборе target route брать за образец контроллеры уровня `api/users`, `api/carts`, `api/wish-lists`, а не action-based CamelCase endpoint.
+6. Для контроллера с собственными HTTP-контрактами использовать предсказуемую структуру папок: controller и отдельные scenario folders с `<Scenario>Request.cs` и `<Scenario>Response.cs`.
 
 ## Анти-паттерны
 1. Рефакторинг маршрутов и DTO без обновления OpenAPI.

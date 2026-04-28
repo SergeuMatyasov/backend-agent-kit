@@ -167,6 +167,36 @@ description: >
 70. Для обязательных полей использовать `required`, validation attributes или валидатор проекта.
 71. Не использовать один и тот же DTO для разных сценариев, если поля, правила или смысл отличаются.
 
+Дополнительные обязательные правила для HTTP DTO:
+
+- Все публичные request DTO и response DTO контроллера должны использовать строгий `camelCase` для каждого JSON-поля.
+- На каждое сериализуемое публичное свойство DTO обязателен явный `[JsonPropertyName("camelCaseName")]`.
+- Нельзя полагаться на global serializer naming policy вместо явного `JsonPropertyName` в публичном API.
+- Request DTO и response DTO должны быть отдельными host-owned HTTP-контрактами, а не application command/query.
+- Request DTO должен иметь явный mapping в business layer через `ToCommand()` или `ToQuery()`.
+- Response DTO должен иметь явный mapping из business/application результата через `From...()` или `Map(...)`.
+- Каждый request DTO и response DTO должен находиться в отдельном файле, имя файла должно совпадать с именем типа.
+- Нельзя складывать несколько DTO в один общий `Contracts.cs`, `Dtos.cs` или другой агрегирующий файл.
+- Для каждого публичного action-метода должна существовать отдельная папка сценария с парой файлов `<Scenario>Request.cs` и `<Scenario>Response.cs`.
+- Название папки сценария должно совпадать с именем DTO-сценария и отражать один конкретный user scenario/action.
+
+### Структура файлов и папок
+
+Обязательный baseline layout для контроллера с собственными HTTP-контрактами:
+
+- `Controllers/<Feature>/<Feature>Controller.cs`
+- `Controllers/<Feature>/<Scenario>/<Scenario>Request.cs`
+- `Controllers/<Feature>/<Scenario>/<Scenario>Response.cs`
+
+Дополнительные правила структуры:
+
+- Если внутри одного блока несколько контроллеров, использовать layout `Controllers/<Block>/<Scenario>/...`.
+- Общий `*ControllerBase.cs` держать на уровне блока, а не внутри leaf-папки конкретного сценария.
+- Для каждого action/scenario использовать отдельную папку, в которой лежат связанные только с ним контракты и mapping helper-ы.
+- В папке контроллера должна оставаться предсказуемая структура: controller, scenario folders, при необходимости base controller.
+- Не смешивать controller file, request DTO, response DTO и shared helper types в одной плоской папке без явной структуры.
+- Не складывать DTO разных action-методов в одну общую папку `Contracts`, если их можно разнести по сценариям.
+
 ### Валидация
 
 72. Простую shape validation можно задавать через DataAnnotations или валидаторы проекта.
@@ -283,8 +313,18 @@ description: >
 16. Тексты ошибок и логов на русском языке.
 17. Возврат чувствительных данных в response DTO.
 18. Ручная обработка всех исключений в каждом action-методе.
+19. Публикация application command/query напрямую в `[FromBody]` вместо host-level request DTO.
+20. Возврат application response model напрямую вместо host-level response DTO.
+21. Несколько request/response DTO в одном файле `Contracts.cs` или `Dtos.cs`.
+22. DTO без явного `[JsonPropertyName(...)]` на сериализуемых свойствах.
+23. Смешение DTO нескольких action-методов в одной общей папке без выделения отдельной папки сценария.
+24. Отсутствие у action-метода собственной папки с файлами `<Scenario>Request.cs` и `<Scenario>Response.cs`.
 
 ## Шаблон контроллера
+
+Для компактности пример ниже показывает контроллер и DTO в одном блоке.
+В реальном коде каждый request DTO и response DTO должен лежать в отдельном файле,
+а для каждого action-метода должна существовать отдельная папка сценария с файлами `<Scenario>Request.cs` и `<Scenario>Response.cs`.
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
@@ -551,15 +591,18 @@ public async Task<IActionResult> Update(
    - обновление OpenAPI и тестов.
 5. Проверь, что route оформлен ресурсно и `id` берется из route.
 6. Проверь, что request DTO не дублирует route `id` без необходимости.
-7. Проверь, что все DTO имеют `JsonPropertyName` и единый `camelCase` стиль.
-8. Проверь, что action не содержит бизнес-логики.
-9. Проверь, что `CancellationToken` принимается и пробрасывается вниз.
-10. Проверь, что все response status codes указаны через `ProducesResponseType`.
-11. Проверь, что все `200 OK` и `201 Created` с телом имеют typed response.
-12. Проверь, что ошибки возвращаются в едином формате.
-13. Проверь, что методы расположены в логическом порядке.
-14. Проверь, что XML-документация соответствует endpoint.
-15. Проверь, что OpenAPI и тесты должны быть обновлены.
+7. Проверь, что все HTTP DTO имеют явный `JsonPropertyName` на каждом сериализуемом свойстве и строгий `camelCase`.
+8. Проверь, что request DTO и response DTO разделены, лежат в отдельных файлах и не используют общий `Contracts.cs`.
+9. Проверь, что request DTO маппится в `command/query`, а response DTO маппится из business/application результата.
+10. Проверь, что у каждого action-метода есть отдельная папка сценария с файлами `<Scenario>Request.cs` и `<Scenario>Response.cs`.
+11. Проверь, что action не содержит бизнес-логики.
+12. Проверь, что `CancellationToken` принимается и пробрасывается вниз.
+13. Проверь, что все response status codes указаны через `ProducesResponseType`.
+14. Проверь, что все `200 OK` и `201 Created` с телом имеют typed response.
+15. Проверь, что ошибки возвращаются в едином формате.
+16. Проверь, что методы расположены в логическом порядке.
+17. Проверь, что XML-документация соответствует endpoint.
+18. Проверь, что OpenAPI и тесты должны быть обновлены.
 
 ## Чеклист перед завершением
 
@@ -587,6 +630,13 @@ public async Task<IActionResult> Update(
 - [ ] Request DTO и response DTO разделены.
 - [ ] DTO имеют `[JsonPropertyName(...)]`.
 - [ ] JSON-поля используют единый `camelCase` стиль.
+- [ ] На каждом сериализуемом свойстве DTO задан явный `[JsonPropertyName(...)]`.
+- [ ] DTO не используют global naming policy как единственный механизм задания JSON-контракта.
+- [ ] Request DTO и response DTO лежат в отдельных файлах.
+- [ ] У каждого action-метода есть отдельная папка сценария.
+- [ ] В папке сценария лежат файлы `<Scenario>Request.cs` и `<Scenario>Response.cs`.
+- [ ] Request DTO маппятся в `command/query`, response DTO маппятся из business/application результата.
+- [ ] В папке контроллера нет общего `Contracts.cs` с несколькими DTO.
 - [ ] Ошибки возвращаются через единый формат.
 - [ ] Возможные `401` и `403` отражены для защищенных endpoint.
 - [ ] Методы расположены в логическом порядке.
