@@ -653,6 +653,9 @@ description: Быстрый triage production-инцидента
 
 Используй как project-wide always-on instruction file.
 
+В текущем контракте `backend-agent-kit` может поставлять shared baseline для этого файла через root-level `copilot-instructions.md`,
+а конкретный consumer может дополнять его локальным `.github/copilot-instructions.local.md`.
+
 Когда подходит:
 
 - единый кодстайл на весь репозиторий;

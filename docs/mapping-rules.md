@@ -8,6 +8,7 @@
 
 | Source in backend-agent-kit | Target in consumer repo |
 |---|---|
+| copilot-instructions.md | .github/copilot-instructions.md |
 | instructions/* | .github/instructions/ |
 | skills/* | .github/skills/ |
 | agents/* | .github/agents/ |
@@ -19,7 +20,7 @@
 
 ## Основные правила
 
-1. Copilot читает instructions, skills, agents, hooks и prompts только из поддерживаемых целевых путей внутри consumer-репозитория.
+1. Copilot читает project-wide instructions, instructions, skills, agents, hooks и prompts только из поддерживаемых целевых путей внутри consumer-репозитория.
 2. Поэтому shared repo должен сначала быть подключен как source of truth, а затем его содержимое должно быть разложено по .github/*.
 3. Каталоги scripts, templates и docs не обязаны копироваться в .github. Они могут использоваться напрямую из tools/backend-agent-kit.
 
@@ -35,7 +36,8 @@
 Shared sync не должен управлять:
 
 - .github/workflows/;
-- локальными AGENTS.md или copilot-instructions.md, если это не отдельное решение проекта;
+- локальными AGENTS.md;
+- repo-specific overlay-файлами вроде `.github/copilot-instructions.local.md`;
 - произвольными docs и scripts consumer-репозитория;
 - файлами вне agreed target paths.
 

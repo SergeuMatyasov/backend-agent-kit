@@ -59,7 +59,8 @@ Shared repo не должен:
 - repo-specific agents;
 - repo-specific hooks;
 - repo-specific prompts;
-- project-wide AGENTS.md или copilot-instructions.md;
+- project-wide AGENTS.md;
+- repo-specific overlay для shared `.github/copilot-instructions.md`, например `.github/copilot-instructions.local.md`;
 - любые локальные workflow и сервисные документы.
 
 Shared repo должен дополнять локальный слой, а не заменять его.
@@ -79,6 +80,7 @@ Shared repo должен дополнять локальный слой, а не
 
 - skills уже имеют стабильные имена и на них могут ссылаться другие документы;
 - single-file примитивы должны визуально отличаться от локальных repo-specific файлов и не конфликтовать с ними по имени.
+- root-level `copilot-instructions.md` использует фиксированное платформенное имя и поэтому не префиксуется.
 
 ### 7. Update flow
 

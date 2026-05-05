@@ -96,6 +96,12 @@ record_manifest_entry() {
     printf '%s\n' "$1" >> "$TMP_MANIFEST"
 }
 
+manifest_has_entry() {
+    local manifest_entry=$1
+
+    [ -f "$MANIFEST_PATH" ] && grep -Fxq "$manifest_entry" "$MANIFEST_PATH"
+}
+
 sync_file() {
     local source_file=$1
     local target_file=$2
@@ -167,6 +173,47 @@ sync_layer() {
             sync_file "$item_path" "$target_path" "$manifest_entry"
         fi
     done < <(find "$source_root" -mindepth 1 -maxdepth 1 | LC_ALL=C sort)
+}
+
+sync_copilot_instructions() {
+    local source_file="$KIT_ROOT/copilot-instructions.md"
+    local overlay_file="$GITHUB_DIR/copilot-instructions.local.md"
+    local target_file="$GITHUB_DIR/copilot-instructions.md"
+    local manifest_entry=".github/copilot-instructions.md"
+    local temp_file
+
+    [ -f "$source_file" ] || return 0
+
+    record_manifest_entry "$manifest_entry"
+    ensure_dir "$GITHUB_DIR"
+
+    if [ ! -f "$overlay_file" ] && [ -f "$target_file" ] && ! manifest_has_entry "$manifest_entry"; then
+        if ! cmp -s "$source_file" "$target_file"; then
+            fail "existing local .github/copilot-instructions.md differs from shared baseline; move repo-specific additions to .github/copilot-instructions.local.md before sync"
+        fi
+    fi
+
+    temp_file=$(mktemp "${TMPDIR:-/tmp}/backend-agent-kit-copilot-instructions.XXXXXX")
+
+    {
+        printf '<!-- Managed by backend-agent-kit sync. Edit tools/backend-agent-kit/copilot-instructions.md for shared rules and .github/copilot-instructions.local.md for repo-specific additions. -->\n\n'
+        cat "$source_file"
+
+        if [ -s "$overlay_file" ]; then
+            printf '\n\n'
+            cat "$overlay_file"
+        fi
+    } > "$temp_file"
+
+    if [ ! -f "$target_file" ] || ! cmp -s "$temp_file" "$target_file"; then
+        mark_change "sync file $manifest_entry"
+
+        if [ "$DRY_RUN" -eq 0 ]; then
+            cp "$temp_file" "$target_file"
+        fi
+    fi
+
+    rm -f "$temp_file"
 }
 
 remove_path() {
@@ -269,6 +316,7 @@ sync_layer skills skills
 sync_layer agents agents
 sync_layer hooks hooks
 sync_layer prompts prompts
+sync_copilot_instructions
 
 cleanup_stale_manifest_entries
 

@@ -6,6 +6,7 @@ Shared source of truth for reusable Copilot customizations in backend repositori
 
 `backend-agent-kit` хранит общий набор backend-кастомизаций, которые могут переиспользоваться в нескольких сервисах:
 
+- project-wide copilot instructions baseline;
 - instructions;
 - skills;
 - agents;
@@ -28,6 +29,7 @@ Shared source of truth for reusable Copilot customizations in backend repositori
 1. Shared-файлы редактируются в `tools/backend-agent-kit`.
 2. Consumer-репозиторий обновляет submodule `tools/backend-agent-kit`.
 3. Скрипт `tools/backend-agent-kit/scripts/sync-to-github.sh` раскладывает shared-файлы в:
+	- `.github/copilot-instructions.md` как shared baseline с optional local overlay
    - `.github/instructions/`
    - `.github/skills/`
    - `.github/agents/`
@@ -56,6 +58,7 @@ Shared source of truth for reusable Copilot customizations in backend repositori
 
 Здесь живет shared source of truth:
 
+- `copilot-instructions.md` - shared baseline для project-wide always-on instructions;
 - `instructions/` - общие instruction-файлы;
 - `skills/` - shared skills;
 - `agents/` - shared agents;
@@ -69,6 +72,7 @@ Shared source of truth for reusable Copilot customizations in backend repositori
 
 Здесь лежат active files, которые реально подхватываются Copilot:
 
+- `.github/copilot-instructions.md`
 - `.github/instructions/`
 - `.github/skills/`
 - `.github/agents/`
@@ -76,6 +80,7 @@ Shared source of truth for reusable Copilot customizations in backend repositori
 - `.github/prompts/`
 
 Shared-файлы попадают сюда через sync. Repo-specific файлы могут жить рядом с ними.
+Для project-wide instructions repo-specific overlay можно хранить в `.github/copilot-instructions.local.md`.
 
 ### В `.github/.backend-agent-kit-manifest`
 
@@ -92,6 +97,8 @@ Shared-файлы попадают сюда через sync. Repo-specific фа�
 Если нужно изменить shared-поведение для нескольких backend-репозиториев, правки вносятся в `tools/backend-agent-kit/*`.
 
 Если нужно добавить правило только для текущего consumer-репозитория, его нужно держать локально в соответствующем `.github/*` каталоге.
+
+Если нужно добавить repo-specific project-wide правило поверх shared baseline, его нужно держать локально в `.github/copilot-instructions.local.md`.
 
 Если нужно изменить workflow, это делается локально в `.github/workflows/` consumer-репозитория.
 
@@ -121,6 +128,7 @@ Shared-файлы попадают сюда через sync. Repo-specific фа�
 
 ```text
 backend-agent-kit/
+	copilot-instructions.md
 	instructions/
 	skills/
 	agents/

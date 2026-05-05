@@ -9,7 +9,8 @@
 Локальными считаются:
 
 - .github/workflows/;
-- AGENTS.md или copilot-instructions.md конкретного репозитория;
+- AGENTS.md конкретного репозитория;
+- repo-specific overlay для shared project-wide instructions, например `.github/copilot-instructions.local.md`;
 - repo-specific instructions;
 - repo-specific skills;
 - repo-specific agents;
@@ -29,6 +30,7 @@
 Для типового backend-сервиса локальными могут быть:
 
 - openapi drift checks, завязанные на конкретный контракт репозитория;
+- repo-specific дополнения к shared `.github/copilot-instructions.md`, вынесенные в `.github/copilot-instructions.local.md`;
 - инструкции по конкретному модулю или bounded context;
 - prompts для внутренней команды проекта;
 - hooks, завязанные на локальные scripts и локальную инфраструктуру;

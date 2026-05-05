@@ -44,7 +44,7 @@ Shared-артефакты не читаются напрямую из `tools/bac
 |---|---|---|
 | Shared repo | submodule в `.github/skills` | submodule вне `.github`, обычно `tools/backend-agent-kit` |
 | Source of truth | direct-mount path | `tools/backend-agent-kit` |
-| Active files для Copilot | тот же direct-mount path | стандартные `.github/instructions`, `.github/skills`, `.github/agents`, `.github/hooks`, `.github/prompts` |
+| Active files для Copilot | тот же direct-mount path | `.github/copilot-instructions.md` и стандартные `.github/instructions`, `.github/skills`, `.github/agents`, `.github/hooks`, `.github/prompts` |
 | Shared layers | по сути skills-only | несколько слоев: instructions, skills, agents, hooks, prompts, scripts, templates, docs |
 | Обновление consumer | переключение submodule в `.github/skills` | update submodule + sync + review diff + отдельный commit |
 | Удаление stale файлов | хрупкое, без точного ownership | controlled cleanup по manifest |
@@ -57,6 +57,8 @@ Shared-артефакты не читаются напрямую из `tools/bac
 ```text
 service-repo/
   .github/
+    copilot-instructions.md
+    copilot-instructions.local.md
     workflows/
     instructions/
     skills/
@@ -72,17 +74,24 @@ service-repo/
 
 `tools/backend-agent-kit/`:
 
+- shared baseline для `.github/copilot-instructions.md`;
 - shared repo;
 - source of truth;
 - место, где меняются reusable shared-артефакты;
 - место, где лежат supporting docs и scripts.
 
-`.github/instructions/`, `.github/skills/`, `.github/agents/`, `.github/hooks/`, `.github/prompts/`:
+`.github/copilot-instructions.md`, `.github/instructions/`, `.github/skills/`, `.github/agents/`, `.github/hooks/`, `.github/prompts/`:
 
 - active files consumer-репозитория;
 - именно отсюда Copilot подхватывает кастомизации;
 - сюда попадают shared-файлы после sync;
 - здесь же могут лежать repo-specific файлы.
+
+`.github/copilot-instructions.local.md`:
+
+- локальный overlay для repo-specific project-wide правил;
+- не управляется shared sync;
+- при наличии дописывается в конец generated `.github/copilot-instructions.md`.
 
 `.github/workflows/`:
 
@@ -106,7 +115,7 @@ service-repo/
 Он делает следующее:
 
 1. Берет shared-файлы из `tools/backend-agent-kit`.
-2. Раскладывает их в поддерживаемые `.github/*` каталоги consumer-репозитория.
+2. Раскладывает их в поддерживаемые `.github/*` каталоги consumer-репозитория и при наличии shared baseline генерирует `.github/copilot-instructions.md`.
 3. Обновляет `.github/.backend-agent-kit-manifest`.
 4. Удаляет stale managed shared-paths, которых больше нет в shared repo.
 5. Не трогает локальные repo-specific файлы вне managed-списка.
@@ -153,9 +162,17 @@ service-repo/
 
 Менять нужно локальный `.github/skills/...` текущего consumer-репозитория.
 
+### Нужно добавить или изменить shared project-wide copilot instructions для нескольких сервисов
+
+Менять нужно `tools/backend-agent-kit/copilot-instructions.md`, затем выполнять sync в consumer-репозиториях.
+
+### Нужно добавить или изменить project-wide правило только для текущего репозитория
+
+Менять нужно локальный `.github/copilot-instructions.local.md` или project-level `AGENTS.md`, если проект использует этот файл.
+
 ### Нужно добавить или изменить instruction только для текущего репозитория
 
-Менять нужно локальный `.github/instructions/...` или project-level `AGENTS.md` / `copilot-instructions.md`, если проект использует эти файлы.
+Менять нужно локальный `.github/instructions/...`.
 
 ### Нужно изменить workflow
 

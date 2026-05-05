@@ -34,7 +34,8 @@
 - repo-specific agents;
 - repo-specific hooks;
 - repo-specific prompts;
-- project-level AGENTS.md или copilot-instructions.md;
+- project-level AGENTS.md;
+- repo-specific overlay для shared `.github/copilot-instructions.md`, например `.github/copilot-instructions.local.md`;
 - `.github/workflows` и локальные scripts.
 
 ### 3. Подключение идет через внешний source of truth
@@ -49,6 +50,7 @@
 
 Рабочими путями для Copilot считаются:
 
+- `.github/copilot-instructions.md`
 - `.github/instructions`
 - `.github/skills`
 - `.github/agents`
@@ -56,6 +58,7 @@
 - `.github/prompts`
 
 Shared repo является source of truth, а active files появляются через sync.
+Для project-wide instructions shared baseline может быть дополнен локальным overlay-файлом `.github/copilot-instructions.local.md`.
 
 ### 5. Update flow считается завершенным только после consumer-side sync
 

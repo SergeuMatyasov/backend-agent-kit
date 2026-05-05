@@ -14,6 +14,7 @@
 
 Результат:
 
+- shared baseline `copilot-instructions.md` генерирует `.github/copilot-instructions.md`;
 - shared instructions копируются в `.github/instructions/`;
 - shared skills копируются в `.github/skills/`;
 - shared agents копируются в `.github/agents/`;
@@ -24,6 +25,7 @@
 
 Практическое следствие:
 
+- repo-specific project-wide additions должны лежать в `.github/copilot-instructions.local.md`, а не редактироваться напрямую в generated `.github/copilot-instructions.md`;
 - если skill или prompt опирается на reusable template из `templates/`, а consumer работает в `.github/*`-only модели, внутри активного skill или prompt нужно оставить короткую совместимую копию шаблона или минимально достаточную структуру;
 - вынос шаблона в `templates/` без такой совместимой копии допустим только после расширения sync-контракта.
 
@@ -93,6 +95,7 @@ git submodule sync --recursive
 Ожидаемый результат:
 
 - появляется `.github/.backend-agent-kit-manifest`;
+- при наличии shared baseline появляется или обновляется `.github/copilot-instructions.md`;
 - `.github/skills` снова существует, но уже как обычная директория с файлами;
 - при необходимости создаются `.github/instructions`, `.github/agents`, `.github/hooks` и `.github/prompts`.
 
@@ -160,6 +163,7 @@ git submodule update --init --recursive
 
 После sync можно добавлять локальные файлы сервиса рядом с shared-файлами:
 
+- `.github/copilot-instructions.local.md` для repo-specific project-wide overlay;
 - `.github/instructions/*` для локальных инструкций;
 - `.github/skills/*` для repo-specific skills;
 - `.github/agents/*` для локальных agents;
@@ -182,7 +186,7 @@ git submodule status
 
 - `tools/backend-agent-kit` виден как обычный submodule;
 - `.github/.backend-agent-kit-manifest` существует;
-- `.github/skills`, `.github/instructions`, `.github/agents`, `.github/hooks` и `.github/prompts` являются обычными директориями consumer-репозитория;
+- `.github/copilot-instructions.md` при наличии shared baseline сгенерирован, а `.github/skills`, `.github/instructions`, `.github/agents`, `.github/hooks` и `.github/prompts` являются обычными директориями consumer-репозитория;
 - `--validate-only` возвращает код `0` сразу после первичного sync.
 
 #### Шаг 5. Зафиксировать начальное состояние
