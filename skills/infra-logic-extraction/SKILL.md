@@ -32,7 +32,7 @@ Skill нужен, чтобы:
 - `.github/skills/migration-principles/SKILL.md`
 - `.github/skills/clean-code-refactoring/SKILL.md`
 - `.github/skills/clean-code-naming/SKILL.md`
-- `.github/skills/code-style-conventions/SKILL.md`
+- `.github/instructions/shared-code-style-conventions.instructions.md`
 
 ## Что считать infra-логикой
 

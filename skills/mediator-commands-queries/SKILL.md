@@ -25,8 +25,8 @@ description: "Используй при создании и рефакторин
 - `.github/skills/clean-architecture-placement/SKILL.md`
 - `.github/skills/clean-code-principles/SKILL.md`
 - `.github/skills/clean-code-refactoring/SKILL.md`
-- `.github/skills/code-style-conventions/SKILL.md`
-- `.github/skills/summary/SKILL.md`
+- `.github/instructions/shared-code-style-conventions.instructions.md`
+- `.github/instructions/shared-summary.instructions.md`
 - `.github/skills/validators/SKILL.md`
 
 ## Целевая структура кейса
@@ -81,7 +81,7 @@ src/DebtRecalcService.Application/UseCases/<Feature>/<CaseName>/
 15. Для ошибок использовать общие typed exceptions из папок слоя `Exceptions`, если эти исключения имеют смысл и вне одного handler.
 16. Namespace должен отражать feature и case folder, а не искусственные сегменты `Commands`, `Queries`, `Handlers`.
 17. Все public types кейса должны иметь XML `summary`.
-18. XML `summary` писать по правилам из `.github/skills/summary/SKILL.md`.
+18. XML `summary` писать по правилам из `.github/instructions/shared-summary.instructions.md`.
 19. `CancellationToken` должен пробрасываться по всей async-цепочке handler-а.
 20. Query должен трактовать вход как read-only контракт и не использовать request как контейнер для подготовки состояния перед сохранением.
 21. Command может координировать изменение состояния, но должен иметь один связный write-сценарий, а не набор несвязанных действий.
@@ -213,7 +213,7 @@ src/DebtRecalcService.Infrastructure/CQRS/Contracts/Queries/EvaluateInterestAccr
 7. Если нет, разнеси request и handler по отдельным файлам внутри той же папки кейса.
 8. Если нужен validator, создай отдельный файл validator-а внутри этой же папки.
 9. Для ошибок используй существующие typed exceptions из общих папок слоя `Exceptions`.
-10. Добавь XML `summary` для request, handler, validator и result по правилам `.github/skills/summary/SKILL.md`.
+10. Добавь XML `summary` для request, handler, validator и result по правилам `.github/instructions/shared-summary.instructions.md`.
 11. Проверь, что query не меняет состояние, а command не маскирует read-only сценарий.
 12. Проверь, что handler не утащил в себя reusable business logic, которую нужно выделить в service.
 
@@ -227,6 +227,6 @@ src/DebtRecalcService.Infrastructure/CQRS/Contracts/Queries/EvaluateInterestAccr
 7. Combined file содержит только request + handler и остается компактным.
 8. Validator, если он есть, лежит в отдельном файле.
 9. Нет handler-specific exception-класса.
-10. Все public types имеют XML `summary` по правилам `.github/skills/summary/SKILL.md`.
+10. Все public types имеют XML `summary` по правилам `.github/instructions/shared-summary.instructions.md`.
 11. Namespace соответствует feature и case folder.
 12. Нет лишних папок `Commands`, `Queries`, `Handlers`, `Validators` внутри одного кейса.

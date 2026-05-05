@@ -39,8 +39,12 @@ description: "Используй при создании и обновлении
 
 ---
 
-## Связанные skills
-- `.github/skills/skill-writing/SKILL.md`
+## Связанные instructions
+- `.github/instructions/shared-skill-writing.instructions.md`
+
+## Связанные templates
+- `readme-flow-template.md` в source-of-truth слое `templates/`
+- в consumer-репозитории канонический файл лежит по пути `tools/backend-agent-kit/templates/readme-flow-template.md`
 
 ---
 
@@ -303,7 +307,9 @@ README должен описывать фактический путь выпо�
 
 ## Рекомендуемая структура README
 
-Ниже шаблон структуры, который нужно использовать по умолчанию для внутренней документации flow.
+Канонический шаблон вынесен в source-of-truth слой `templates/`.
+В consumer-репозитории он лежит по пути `tools/backend-agent-kit/templates/readme-flow-template.md` и не раскладывается в `.github/*` текущим sync-контрактом.
+Ниже оставлена совместимая копия, чтобы skill сохранял полезность в `.github/*`-only delivery model.
 
 ```md
 # <Название процесса>

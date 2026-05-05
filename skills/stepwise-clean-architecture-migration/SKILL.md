@@ -18,7 +18,7 @@ big bang rewrite и без потери проверяемости поведе�
 
 ## Связанные skills
 - `.github/skills/migration-principles/SKILL.md`
-- `.github/skills/module-analysis-template/SKILL.md`
+- `.github/skills/module-analysis/SKILL.md`
 - `.github/skills/clean-architecture-placement/SKILL.md`
 - `.github/skills/clean-code-refactoring/SKILL.md`
 

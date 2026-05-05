@@ -1,12 +1,12 @@
 ---
-name: module-analysis-template
+name: module-analysis
 description: "Используй при анализе файлов и модулей перед миграцией, декомпозицией и разделением по слоям."
 ---
 
-# Module Analysis Template
+# Module Analysis
 
 ## Цель
-Дать единый шаблон анализа файла или модуля, чтобы перед миграцией или рефакторингом быстро
+Дать единый способ анализа файла или модуля, чтобы перед миграцией или рефакторингом быстро
 зафиксировать ответственность, зависимости, побочные эффекты, скрытые инварианты и слой.
 
 ## Когда использовать
@@ -21,6 +21,10 @@ description: "Используй при анализе файлов и моду�
 - `.github/skills/migration-principles/SKILL.md`
 - `.github/skills/clean-architecture-placement/SKILL.md`
 - `.github/skills/stepwise-clean-architecture-migration/SKILL.md`
+
+## Связанные templates
+- `module-analysis-template.md` в source-of-truth слое `templates/`
+- в consumer-репозитории канонический файл лежит по пути `tools/backend-agent-kit/templates/module-analysis-template.md`
 
 ## Обязательные правила
 1. Анализируй каждый файл или модуль отдельно.
@@ -50,6 +54,10 @@ description: "Используй при анализе файлов и моду�
    формат данных или внешний процесс.
 
 ## Шаблон таблицы
+
+Канонический шаблон вынесен в source-of-truth слой `templates/`.
+В consumer-репозитории он лежит по пути `tools/backend-agent-kit/templates/module-analysis-template.md` и не раскладывается в `.github/*` текущим sync-контрактом.
+Ниже оставлена совместимая копия, чтобы skill сохранял полезность в `.github/*`-only delivery model.
 
 | Файл или модуль | Ответственность | Входы | Выходы | Зависимости | Side effects | Скрытые инварианты | Domain | Application | Infrastructure | Точка сцепления с legacy |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

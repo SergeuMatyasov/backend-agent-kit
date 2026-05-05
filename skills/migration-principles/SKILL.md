@@ -21,7 +21,7 @@ description: "Используй при миграции legacy-кода и пе
 - `.github/skills/clean-architecture-placement/SKILL.md`
 - `.github/skills/clean-code-principles/SKILL.md`
 - `.github/skills/clean-code-refactoring/SKILL.md`
-- `.github/skills/module-analysis-template/SKILL.md`
+- `.github/skills/module-analysis/SKILL.md`
 - `.github/skills/stepwise-clean-architecture-migration/SKILL.md`
 
 ## Обязательные правила

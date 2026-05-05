@@ -27,8 +27,8 @@ description: "Используй при добавлении новой доме
 ## Связанные skills
 - `.github/skills/clean-architecture-placement/SKILL.md`
 - `.github/skills/clean-code-naming/SKILL.md`
-- `.github/skills/code-style-conventions/SKILL.md`
-- `.github/skills/summary/SKILL.md`
+- `.github/instructions/shared-code-style-conventions.instructions.md`
+- `.github/instructions/shared-summary.instructions.md`
 
 ## Обязательные правила
 1. Новую persisted-сущность добавлять в Domain, а не в `Infrastructure`, `EFCore`, `Host` или `Shared`.

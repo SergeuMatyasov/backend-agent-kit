@@ -1,6 +1,6 @@
 ---
 name: commit-messages
-description: "Используй при написании и ревью commit message: номер задачи, Conventional Commits, scope, subject и body."
+description: "Инструкция по написанию и ревью commit message: номер задачи, Conventional Commits, scope, subject и body."
 ---
 
 # Commit Messages
@@ -13,7 +13,7 @@ description: "Используй при написании и ревью commit 
 - оставалась пригодной для поиска и ревью.
 
 ## Когда использовать
-Используй этот skill, если нужно:
+Используй эту instruction, если нужно:
 - написать commit message для нового коммита;
 - подготовить message для squash или rebase;
 - проверить качество commit history перед PR;

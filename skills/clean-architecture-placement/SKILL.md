@@ -25,7 +25,7 @@ description: "Используй при создании новых файлов
 - `.github/skills/clean-code-principles/SKILL.md`
 - `.github/skills/clean-code-refactoring/SKILL.md`
 - `.github/skills/clean-code-solid/SKILL.md`
-- `.github/skills/code-style-conventions/SKILL.md`
+- `.github/instructions/shared-code-style-conventions.instructions.md`
 - `.github/skills/controllers/SKILL.md`
 - `.github/skills/unit-testing/SKILL.md`
 

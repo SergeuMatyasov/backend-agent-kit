@@ -36,7 +36,7 @@ description: "Используй при создании и обновлении
 ## Связанные skills
 - `.github/skills/unit-testing/SKILL.md`
 - `.github/skills/clean-architecture-placement/SKILL.md`
-- `.github/skills/code-style-conventions/SKILL.md`
+- `.github/instructions/shared-code-style-conventions.instructions.md`
 
 ---
 
