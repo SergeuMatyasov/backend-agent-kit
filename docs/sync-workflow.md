@@ -220,6 +220,40 @@ git submodule status
 - код `0`: consumer-репозиторий уже синхронизирован;
 - код `1`: обнаружен drift и sync внес бы изменения.
 
+## Локальная git hook автоматизация
+
+Если нужно сделать поведение явным и повторяемым, в `backend-agent-kit` можно включить локальный git `post-commit` hook.
+
+Versioned hook лежит здесь:
+
+- `tools/backend-agent-kit/scripts/git-hooks/post-commit`
+
+Хук вызывает:
+
+- `tools/backend-agent-kit/scripts/auto-sync-consumer-after-shared-commit.sh`
+
+Что делает эта автоматизация:
+
+1. После commit внутри `tools/backend-agent-kit` запускает обычный `sync-to-github.sh --repo-root .`.
+2. Ставит в index только `.github/*` managed changes и `tools/backend-agent-kit`.
+3. Создает отдельный consumer-side commit в основном репозитории.
+
+Как включить локально:
+
+```bash
+git -C tools/backend-agent-kit config core.hooksPath scripts/git-hooks
+chmod +x tools/backend-agent-kit/scripts/git-hooks/post-commit
+chmod +x tools/backend-agent-kit/scripts/auto-sync-consumer-after-shared-commit.sh
+```
+
+Важные guard-условия:
+
+- если в consumer-репозитории уже есть staged changes, auto-commit не делается;
+- если `.github` уже грязный, auto-sync и auto-commit не делаются автоматически;
+- если `backend-agent-kit` расположен не по пути `tools/backend-agent-kit`, hook завершается без действия.
+
+Это сделано специально, чтобы hook не подмешивал в consumer commit посторонние изменения.
+
 ## Manifest
 
 Manifest хранится по пути:

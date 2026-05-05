@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "${BACKEND_AGENT_KIT_SKIP_POST_COMMIT_SYNC:-0}" = "1" ]; then
+    exit 0
+fi
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+KIT_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/../.." && pwd)
+
+"$KIT_ROOT/scripts/auto-sync-consumer-after-shared-commit.sh"
