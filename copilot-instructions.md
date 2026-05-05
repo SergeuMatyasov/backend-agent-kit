@@ -6,6 +6,8 @@
 - Explain briefly what looks wrong, risky, incomplete, or suboptimal.
 - Propose the safer or better alternative first, with the key tradeoff.
 - Ask for confirmation before proceeding when the better path changes architecture, contract, rollout, migration strategy, testing scope, or other important technical decisions.
+- If a disputed or ambiguous decision materially affects the result and cannot be resolved confidently from the local context, ask the user instead of guessing.
+- When escalation is needed, let the user either decide directly or explicitly delegate the decision back to the agent.
 - Do not follow a technically weak or suspicious request blindly just because it was requested.
 - If the user suggests one implementation idea, but there is a stronger option, present that option before execution.
 - When assumptions are unverified and they matter to the result, surface them explicitly and discuss them before acting.
@@ -48,4 +50,6 @@
 
 - Prefer changes that can be reviewed, validated, and explained as one logical slice.
 - If a task naturally contains multiple independent goals, propose splitting it into separate slices or PR stages before implementation.
+- If the requested task is too large to implement safely as one slice, stop and propose a concrete breakdown before proceeding.
+- If the expected volume of edits is likely to reduce solution quality, reviewability, or validation confidence, warn the user and suggest a narrower slice or staged delivery.
 - Do not leave a task in a half-migrated or ambiguously mixed state when a smaller complete slice is possible.
