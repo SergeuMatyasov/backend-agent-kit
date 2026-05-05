@@ -6,6 +6,14 @@ log() {
     printf '%s\n' "$*" >&2
 }
 
+clear_git_local_env() {
+    local env_name
+
+    while IFS= read -r env_name; do
+        unset "$env_name"
+    done < <(git -C "$KIT_ROOT" rev-parse --local-env-vars)
+}
+
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 KIT_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
 REPO_ROOT=${BACKEND_AGENT_KIT_REPO_ROOT:-$(CDPATH= cd -- "$KIT_ROOT/../.." && pwd)}
@@ -13,6 +21,10 @@ REPO_ROOT=$(CDPATH= cd -- "$REPO_ROOT" && pwd)
 
 SYNC_SCRIPT="$KIT_ROOT/scripts/sync-to-github.sh"
 SUBMODULE_PATH="tools/backend-agent-kit"
+
+# Git hook processes inherit repo-local GIT_* variables.
+# Clear them before operating on the consumer repository.
+clear_git_local_env
 
 if [ ! -f "$SYNC_SCRIPT" ]; then
     log "skip auto-sync: sync script not found at $SYNC_SCRIPT"
