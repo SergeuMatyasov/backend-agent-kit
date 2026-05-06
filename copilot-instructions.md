@@ -21,6 +21,12 @@
 - Do not expand a task into broad stylistic cleanup or codebase-wide rewriting without explicit confirmation from the user.
 - When the existing style is imperfect but not harmful enough to justify divergence in the current slice, keep the change local and call out the issue instead of silently spreading either pattern.
 
+## Meaningful Improvement Rule
+
+- If the user asks whether something can be improved, or asks you to improve it, and the current result is already good enough, say that explicitly.
+- Do not invent cosmetic churn, fake optimization, or other busywork when it does not materially improve the outcome.
+- If further changes would add motion without meaningful benefit, explain that clearly and stop instead of simulating progress.
+
 ## Adjacent Improvement Rule
 
 - If, while working on the requested task, you notice a bug, risky behavior, clear optimization, or other meaningful improvement in pre-existing code, surface it to the user instead of staying silent.
