@@ -32,6 +32,18 @@
 - If the violation is broader, risky, or not necessary to finish the requested task safely, propose the smallest safe follow-up instead of expanding scope silently.
 - When placement or ownership is unclear, stop and resolve the ambiguity before adding more code to the wrong layer.
 
+## SOLID Guard Rule
+
+- Treat SOLID as a design baseline when creating, splitting, extending, or refactoring code.
+- Keep responsibilities narrow and explicit instead of letting one class, handler, service, or controller accumulate unrelated reasons to change.
+- Extend behavior through stable seams when variation is real, but do not manufacture abstractions, interfaces, or strategy layers with no real ownership or second use case.
+- Keep contracts substitutable: implementations, derived types, and adapters must honor the expectations of the abstraction they implement.
+- Prefer narrow interfaces and dependency boundaries that expose only what the caller actually needs.
+- Depend on abstractions at module boundaries when behavior crosses technical or architectural seams, but do not cargo-cult DIP inside tiny local code where a direct dependency is clearer.
+- When the touched old code contains a meaningful SOLID violation, explicitly call it out instead of silently copying the pattern into new code.
+- If that violation is small and safe to improve inside the current slice, propose the correction or include it after confirming scope when needed.
+- If the violation is broader, risky, or not required to complete the task safely, propose the smallest safe follow-up instead of expanding scope silently.
+
 ## Meaningful Improvement Rule
 
 - If the user asks whether something can be improved, or asks you to improve it, and the current result is already good enough, say that explicitly.
