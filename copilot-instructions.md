@@ -44,6 +44,30 @@
 - If that violation is small and safe to improve inside the current slice, propose the correction or include it after confirming scope when needed.
 - If the violation is broader, risky, or not required to complete the task safely, propose the smallest safe follow-up instead of expanding scope silently.
 
+## Duplication And Cohesion Rule
+
+- Prefer one clear owning implementation for one behavior instead of copying the same logic across handlers, services, controllers, repositories, or helpers.
+- When logic starts repeating, extract the smallest stable shared unit into the layer that owns the behavior, but do not force weak abstractions just to satisfy DRY mechanically.
+- Keep modules cohesive: a class, handler, service, or file should serve one tight concern instead of mixing orchestration, mapping, validation, persistence, transport, and business rules.
+- Reduce coupling by depending on narrow inputs and outputs rather than reaching through deep object chains or leaking internal state across boundaries.
+- Hide mutable or sensitive internals behind explicit operations and stable contracts instead of exposing data structures only to let outside code manipulate them.
+
+## Pragmatic Simplicity Rule
+
+- Prefer the simplest design that cleanly solves the current requirement.
+- Do not add extension points, feature flags, abstractions, configuration knobs, or prebuilt scenarios for hypothetical future needs.
+- Add complexity only when a real second use case, variation point, or operational constraint makes it necessary.
+- Prefer convention and existing project patterns over new local frameworks, custom pipelines, or bespoke configuration unless they materially improve the result.
+- Prefer composition or small collaborating types over deep inheritance trees when behavior needs to vary.
+
+## Contract Clarity Rule
+
+- Make behavior unsurprising: names, return values, side effects, and failure modes should match what another developer would reasonably expect.
+- Prefer commands that mutate and queries that read to stay distinct; do not hide writes, remote calls, or expensive side effects behind read-like APIs.
+- Validate critical assumptions early and fail fast before partial side effects leave the system in an invalid state.
+- Keep public interfaces narrow and explicit; expose only the operations and data a caller actually needs.
+- Give code, components, and integrations only the minimum access, scope, and privilege needed for the current job.
+
 ## Meaningful Improvement Rule
 
 - If the user asks whether something can be improved, or asks you to improve it, and the current result is already good enough, say that explicitly.
