@@ -21,6 +21,17 @@
 - Do not expand a task into broad stylistic cleanup or codebase-wide rewriting without explicit confirmation from the user.
 - When the existing style is imperfect but not harmful enough to justify divergence in the current slice, keep the change local and call out the issue instead of silently spreading either pattern.
 
+## Clean Architecture Guard Rule
+
+- Treat clean architecture as the default baseline when creating, moving, or refactoring code.
+- Place new code in the owning layer instead of following nearby legacy placement when that legacy placement is architecturally wrong.
+- Keep business decisions in Domain or Application, delivery concerns in Host, technical adapters in Infrastructure, and provider-specific persistence in EFCore.
+- Do not add new use cases, orchestration, or business rules to Infrastructure, EFCore, Host, or convenience folders just because the surrounding code already does that.
+- When the touched old code contains a clean architecture violation, explicitly call it out instead of silently extending the pattern.
+- If that violation is small and safe to correct inside the current slice, propose the correction or include it after confirming scope when needed.
+- If the violation is broader, risky, or not necessary to finish the requested task safely, propose the smallest safe follow-up instead of expanding scope silently.
+- When placement or ownership is unclear, stop and resolve the ambiguity before adding more code to the wrong layer.
+
 ## Meaningful Improvement Rule
 
 - If the user asks whether something can be improved, or asks you to improve it, and the current result is already good enough, say that explicitly.
