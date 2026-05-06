@@ -21,6 +21,12 @@
 - Do not expand a task into broad stylistic cleanup or codebase-wide rewriting without explicit confirmation from the user.
 - When the existing style is imperfect but not harmful enough to justify divergence in the current slice, keep the change local and call out the issue instead of silently spreading either pattern.
 
+## Adjacent Improvement Rule
+
+- If, while working on the requested task, you notice a bug, risky behavior, clear optimization, or other meaningful improvement in pre-existing code, surface it to the user instead of staying silent.
+- If that improvement is small, adjacent, and safe, you may propose including it in the current slice.
+- If that improvement is broader, riskier, or changes the scope materially, call it out as a follow-up or ask whether to include it instead of expanding scope silently.
+
 ## Reuse And Ownership Rule
 
 - Reuse existing implementations before introducing duplicates.
