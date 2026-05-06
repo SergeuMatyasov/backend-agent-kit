@@ -80,6 +80,10 @@ service-repo/
 - место, где меняются reusable shared-артефакты;
 - место, где лежат supporting docs и scripts.
 
+Если shared-слой сознательно допускает умеренно opinionated cross-service conventions,
+они должны быть явно зафиксированы в `tools/backend-agent-kit/docs/shared-opinionated-conventions.md`,
+а не прятаться внутри shared-файлов без отдельной пометки.
+
 `.github/copilot-instructions.md`, `.github/instructions/`, `.github/skills/`, `.github/agents/`, `.github/hooks/`, `.github/prompts/`:
 
 - active files consumer-репозитория;
