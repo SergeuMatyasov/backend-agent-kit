@@ -1,6 +1,7 @@
 ---
 name: controllers
-summary: Используй при разработке, рефакторинге и ревью ASP.NET Core контроллеров.
+metadata:
+  short-description: Разработка, рефакторинг и ревью ASP.NET Core контроллеров
 description: >
   Стандарт для ASP.NET Core контроллеров: контракт API, маршруты, DTO, HTTP-коды,
   валидация, OpenAPI, CancellationToken, порядок методов и стиль кода.
@@ -33,11 +34,9 @@ description: >
 
 ## Связанные skills
 
-- `controllers-contract-openapi`
-- `controllers-testing`
-- `validators`
-- `dto-style`
-- `api-versioning`
+- `.github/skills/controllers-contract-openapi/SKILL.md`
+- `.github/skills/controllers-testing/SKILL.md`
+- `.github/skills/validators/SKILL.md`
 
 ## Роль контроллера
 

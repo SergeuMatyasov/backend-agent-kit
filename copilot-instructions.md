@@ -1,16 +1,21 @@
 # Project Instructions
 
-## Mandatory Consultation Rule
+## Decisions And Follow-Through
 
-- If the user request contains a likely mistake, risky assumption, hidden regression risk, weak technical idea, suspicious constraint, or a materially better solution exists, stop before making edits or implementing the requested path.
-- Explain briefly what looks wrong, risky, incomplete, or suboptimal.
-- Propose the safer or better alternative first, with the key tradeoff.
-- Ask for confirmation before proceeding when the better path changes architecture, contract, rollout, migration strategy, testing scope, or other important technical decisions.
-- If a disputed or ambiguous decision materially affects the result and cannot be resolved confidently from the local context, ask the user instead of guessing.
-- When escalation is needed, let the user either decide directly or explicitly delegate the decision back to the agent.
-- Do not follow a technically weak or suspicious request blindly just because it was requested.
-- If the user suggests one implementation idea, but there is a stronger option, present that option before execution.
-- When assumptions are unverified and they matter to the result, surface them explicitly and discuss them before acting.
+- Identify factual mistakes and concrete technical risks candidly; explain the better option and its relevant tradeoff.
+- For an implementation request, complete the authorized work and relevant verification. Resolve routine, reversible implementation choices from repository evidence instead of treating every uncertainty as a reason to stop.
+- Ask when a missing decision materially changes the outcome and cannot be inferred, or when the proposed path changes a public contract, architecture, rollout, or migration strategy beyond the user's authorization. Do not request the same authorization again.
+- Continue independent, authorized work while a decision is pending. Prepare evidence and a concrete proposal before requesting a decision.
+- Preserve analysis-only, plan-only, and explicitly stepwise review requests; they do not authorize automatic implementation or skipping user checkpoints.
+- Surface material assumptions and do not silently follow a demonstrably flawed premise.
+
+## Instruction Scope And Validation
+
+- Apply scoped instructions to the matching work. Read required files fully, but do not repeatedly load unchanged instructions already available in context.
+- Select skills for the actual deliverable. Related-skill lists are navigation; load an additional skill only when its rules apply to the current task or it is explicitly required.
+- Skill defaults do not override the user's explicit scope, output format, or already-authorized decisions. Explain the exact conflicting instruction if it prevents completion, subject to higher-priority instructions and tool permissions.
+- Run required repository checks and tests that cover changed behavior and affected contracts. Add regression coverage for meaningful behavior changes; do not add tests solely to mirror an implementation or repeat broad suites without a new reason.
+- Report results, relevant verification, and remaining limitations concisely. Keep internal checklists internal unless the user requests them or they are a requested artifact.
 
 ## Professional Quality Rule
 
@@ -108,7 +113,7 @@
 ## Slice Readiness Rule
 
 - Prefer changes that can be reviewed, validated, and explained as one logical slice.
-- If a task naturally contains multiple independent goals, propose splitting it into separate slices or PR stages before implementation.
-- If the requested task is too large to implement safely as one slice, stop and propose a concrete breakdown before proceeding.
+- If an authorized task contains multiple goals, organize it into reviewable slices and validate each before continuing.
+- For a large implementation request, state a concrete staged plan and continue through the authorized stages. Pause only for unresolved consequential decisions or explicit user checkpoints.
 - If the expected volume of edits is likely to reduce solution quality, reviewability, or validation confidence, warn the user and suggest a narrower slice or staged delivery.
 - Do not leave a task in a half-migrated or ambiguously mixed state when a smaller complete slice is possible.
